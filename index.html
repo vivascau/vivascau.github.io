@@ -1,1 +1,62 @@
+<html>
+<head>
+    <title>.dev</title>
+    <script src="headtrackr.js"></script>
+</head>
+<body>
+<!--
+<video id="webcam" autoplay></video>
+<script>
+var videoElement = document.getElementById('webcam');
+
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+navigator.getUserMedia({
+    video: true,
+    audio: true
+}, function(localMediaStream) {
+    videoElement.src = window.URL.createObjectURL(localMediaStream);
+
+    // Note: onloadedmetadata doesn't fire in Chrome when using it with getUserMedia.
+    // See crbug.com/110938.
+    videoElement.onloadedmetadata = function(e) {
+        console.log('Something happened. Do some stuff');
+    };
+}, function(e) {
+    if (e.code === 1) {
+      console.log('User declined permissions.');
+    }
+});
+</script> -->
 .dev
+
+<br/>
+<canvas id="inputCanvas" width="320" height="240" ></canvas>
+<video id="inputVideo" autoplay loop></video>
+<script type="text/javascript">
+    var videoInput = document.getElementById('inputVideo');
+    var canvasInput = document.getElementById('inputCanvas');
+    var ctx = canvasInput.getContext("2d");
+
+
+    var htracker = new headtrackr.Tracker();
+    htracker.init(videoInput, canvasInput);
+    htracker.start();
+
+    // this event listener picks up head tracking events and sets some variables
+    document.addEventListener("headtrackingEvent", function(e) {
+        console.log('e.x:'+e.x);
+        console.log('e.y:'+e.y);
+        drawPoint(e.x, e.y);
+
+    }, false);
+
+    function drawPoint(x, y){
+        ctx.beginPath();
+        ctx.arc(300-x, y, 30, 0, 4 * Math.PI, false);
+        ctx.stroke();
+    }
+
+</script>
+</body>
+</html>
